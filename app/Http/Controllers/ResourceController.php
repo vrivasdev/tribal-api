@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Response;
+use Illuminate\Http\Request;
 
-use App\Services\MediaService;
 use App\Services\ShowService;
+use App\Services\MediaService;
+use App\Services\PersonService;
 
 class ResourceController extends Controller
 {
     public function get(Request $request)
     {
-        $mediaType = ['movie', 'music', 'show'];
+        $mediaType = ['movie', 'music', 'show', 'person'];
 
         if (!in_array($request->query('media'), $mediaType)) {
             return response(
@@ -32,6 +33,9 @@ class ResourceController extends Controller
             break;
             case 'show':
                 $result = ShowService::search($request->query('key'));
+            break;
+            case 'person':
+                $result = PersonService::search($request->query('key'));
             break;
         }
         return response($result, 

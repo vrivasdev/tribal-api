@@ -16,7 +16,7 @@ class ShowService
         return [
             'code' => $response->status(),
             'message' => $response->ok()? 'Success' : 'Show doesn\'t exist',
-            'data' => $response->ok()? $body : [],
+            'data' => $response->ok()? [$body] : [],
             'status' => $response->ok()? 'success': 'error'
         ];
     }
