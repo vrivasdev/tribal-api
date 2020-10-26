@@ -15,7 +15,7 @@ class ResourceController extends Controller
     {
         $mediaType = ['movie', 'music', 'show', 'person'];
 
-        if (!in_array($request->query('media'), $mediaType)) {
+        if (!in_array($request->query('type'), $mediaType)) {
             return response(
                 ['message' => 'Media type not found',
                  'status' => 'error'],
@@ -23,12 +23,12 @@ class ResourceController extends Controller
             );
         }
 
-        switch($request->query('media')) {
+        switch($request->query('type')) {
             case 'music':
             case 'movie':
                 $result = MediaService::search(
                     $request->query('key'),
-                    $request->query('media')
+                    $request->query('type')
                 );
             break;
             case 'show':
@@ -39,6 +39,6 @@ class ResourceController extends Controller
             break;
         }
         return response($result, 
-                        $result['code']);
+                        $result['code'])->header("Access-Control-Allow-Origin",  "*");
     }
 }
